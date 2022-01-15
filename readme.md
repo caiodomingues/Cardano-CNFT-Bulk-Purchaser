@@ -1,57 +1,56 @@
-# Cardano NFT Bulk Purchaser #
+# Cardano NFT Bulk Purchaser
 
-This tool is used to purchase Cardano NFT drops from multiple wallets using the cardano-cli, to allow for rapid purchases in high-demand drops.
+Esta ferramenta é usada para comprar Drops NFT da rede Cardano utilizando várias carteiras por meio do `cardano-cli`, para permitir compras rápidas em drops de alta demanda.
 
-The tool assumes that the CNFT drop uses or allows multiple purchases sent to a single address and that the cost of each CNFT is known before the drop.
+A ferramenta assume que o Drop CNFT utiliza ou permite várias compras enviadas para um único endereço e que o custo de cada CNFT é conhecido antes do drop.
 
-This tool will leverage the cardano-cli.exe which ships with the Daedalus wallet, and communicates to the blockchain using the cardano-node.exe process which is executed when the Daedalus wallet is running. Please ensure Daedalus is executing before attempting to use this tool.
+Esta ferramenta irá alavancar o `cardano-cli.exe` que vem com a carteira Daedalus e se comunica com o blockchain usando o processo `cardano-node.exe` que é executado quando a carteira Daedalus está em execução. **Certifique-se de que o Daedalus esteja em execução antes de tentar usar esta ferramenta.**
 
-## Modules ##
+## Módulos
 
-This tool has 4 modes: [Build, Verify, Send, Redeem].
+Essa ferramenta tem 4 modos: Build, Verify, Send, Redeem
 
-### Build ###
+### Build
 
+O módulo `Build` cria N novos endereços e chaves de pagamento que podem ser usados para comprar tokens CNFT. Certifique-se de financiar cada endereço com um único UTXO **cobrindo o custo** do CNFT, além de alguns ADA extras para cobrir as taxas de transação para envio e resgate.
 
-The `Build` module creates N new addresses and payment keys which can be used for purchasing CNFT tokens. Make sure to fund each address with a single UTXO covering the cost of the CNFT, plus a few extra ADA to cover transaction fees for sending and redeeming.
+### Verify
 
-### Verify ###
+O módulo `Verify` verifica o conteúdo atual de cada endereço gerado para fins de verificação manual e armazena em cache o primeiro UTXO no disco para garantir que possa ser enviado o mais rápido possível.
 
-The `Verify` module checks the current contents of each generated address for manual verification purposes, and caches the first UTXO to disk to ensure it can be sent as fast as possible.
+### Send
 
-### Send ###
+O módulo `Send` enviará `X` ADA de cada carteira gerada para a carteira receptora especificada. Este módulo será utilizado para a compra do CNFT.
 
-The `Send` module will send `X` ADA from each generated wallet to the specified receiver wallet. This module will be used to purchase the CNFT.
+### BulkSend
 
-### BulkSend ###
+O módulo `BulkSend` enviará `X` * `N` ADA de uma única carteira gerada para a carteira do receptor em massa especificada. Este módulo pode ser usado para comprar CNFTs enviando várias transações de saída de uma única carteira.
 
-The `BulkSend` module will send `X` * `N` ADA from a single generated wallet to the specified bulkreceiver wallet. This module can be used to purchase CNFTs by sending multple output-transactions from a single wallet.
+### Redeem
 
-### Redeem ###
-
-The `Redeem` module will extract all ADA and every CNFT, and send it back to the specified wallet.
+O módulo `Redeem` extrairá todos os ADA e todos os CNFT e os enviará de volta para a carteira especificada.
 
 ## Arguments ##
 
-`-count`: The number of wallets and addresses to [Build, Verify, Send, Redeem] from.
+`-count`: O número de carteiras e endereços para Build, Verify, Send, Redeem.
 
-`-build`: Set the build flag to execute the `Build` module.
+`-build`: Defina a flag de compilação para executar o módulo `Build`.
 
-`-verify`: Set the verify flag to execute the `Verify` module.
+`-verify`: Defina a flag de verificação para executar o módulo `Verify`.
 
-`-cost`: The price in ADA that the `Send` module will send to the `-receiver` address.
+`-cost`: O preço em ADA que o módulo `Send` enviará para o endereço `-receiver`.
 
-`-receiver`: The address ADA is sent to when executing the `Send` module.
+`-receiver`: O endereço para o qual o ADA é enviado ao executar o módulo `Send`.
 
-`-bulkcost`: The price in ADA that the `BulkSend` module will send to the `-bulkreceiver` address in each output transaction.
+`-bulkcost`: O preço em ADA que o módulo `BulkSend` enviará para o endereço `-bulkreceiver` em cada transação de saída.
 
-`-bulkreceiver`: The address ADA is sent to when executing the `BulkSend` module.
+`-bulkreceiver`: O endereço ADA é enviado ao executar o módulo `BulkSend`.
 
-`-wallet`: The address ADA and CNFTs are sent to when executing the `Redeem` module.
+`-wallet`: O endereço ADA e CNFTs são enviados ao executar o módulo `Redeem`.
 
-`-safemode`: Set the `Send` or `Receive` mode to run in safety mode, prompting for approval before sending transactions. This will allow for extra time to double-check the command-line arguments to ensure ADA is sent to the correct location.
+`-safemode`: Defina o modo `Send` ou `Receive` para ser executado no modo de segurança, solicitando aprovação antes de enviar transações. Isso permitirá tempo extra para verificar novamente os argumentos da linha de comando para garantir que o ADA seja enviado para o local correto.
 
-## Examples ##
+## Exemplos
 
 --- Build 3 wallets ---
 ```
@@ -64,7 +63,7 @@ What is the cost in ADA for the NFT mint?: 1
 It is recommended to send at least 3 ADA to each wallet in order to cover transaction costs of sending and redeeming all assets.
 ```
 
---- Verify wallet contents are populated and cache the UTXOs ---
+--- Verifique se o conteúdo da carteira está preenchido e armazene em cache os UTXOs ---
 
 ```
 .\purchase.ps1 -count 3 -verify
@@ -75,7 +74,7 @@ It is recommended to send at least 3 ADA to each wallet in order to cover transa
 
 ```
 
---- Send 1 ADA to a CNFT address ---
+--- Envie 1 ADA para um endereço CNFT ---
 
 ```
 .\purchase.ps1 -count 3 -cost 1 -receiver addr1zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -safemode
@@ -92,7 +91,7 @@ Using Cache File
 [10-11-2021 20:33:18:134] Transaction successfully submitted.
 ```
 
---- BulkSend 3 ADA to a CNFT address, using 3 output transactions of 1 ADA each ---
+--- BulkSend 3 ADA para um endereço CNFT, usando 3 transações de saída de 1 ADA cada ---
 
 ```
 .\purchase.ps1 -count 3 -bulkcost 1 -bulkreceiver addr1zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -safemode
@@ -105,7 +104,7 @@ Using Cache File
 [10-11-2021 20:33:17:838] Transaction successfully submitted.
 ```
 
---- Verify wallet contents received UTXOs ---
+--- Verifique o conteúdo da carteira UTXOs recebidos ---
 
 ```
 .\purchase.ps1 -count 3 -verify
@@ -118,7 +117,7 @@ Using Cache File
 [addr1aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaac] UTXO Data: Hash=c81c25bee1a4b8d451374d8e16e03b694fdc9be87bbf2b29c9e6ac044d0e83a7, Ix=1, Amount=1.824731 ADA
 ```
 
---- Redeem any leftover ADA and the CNFTs to original owner wallet ---
+--- Resgate qualquer ADA restante e os CNFTs para a carteira do proprietário original ---
 
 ```
 .\purchase.ps1 -count 3 -wallet addr1bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
@@ -142,8 +141,9 @@ Are you sure you want to proceed sending [3.025706] ADA and the assets [1 tttttt
 [10-11-2021 20:34:26:824] Transaction successfully submitted.
 ```
 
-## Donations ##
-If this script is useful for you, please consider donating ADA to the following address:
+## Doações
+
+Se este script for útil para você, considere doar a ADA para o seguinte endereço. Lembrando que este repositório é um fork, o endereço abaixo é do criador original, e não meu (caiodomingues):
 
 ```
 addr1q9afhw5v8rkydmvd34kl6mjvllr58lsf8kjv8wnyftf73g4utnxgcn0srryfpc4tmlq0n9lr9w5uhzqax88dneyhs48q84wugk

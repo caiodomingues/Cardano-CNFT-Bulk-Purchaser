@@ -1,13 +1,10 @@
-
-Util Commands:
+# Util Commands:
 
 Set-ExecutionPolicy -ExecutionPolicy Unrestricted
 
 Install-Module -Name ThreadJob -Scope CurrentUser
 
-
-
-# Cardano NFT Bulk Purchaser #
+# Cardano NFT Bulk Purchaser
 
 This tool is used to purchase Cardano NFT drops from multiple wallets using the cardano-cli, to allow for rapid purchases in high-demand drops.
 
@@ -15,32 +12,31 @@ The tool assumes that the CNFT drop uses or allows multiple purchases sent to a 
 
 This tool will leverage the cardano-cli.exe which ships with the Daedalus wallet, and communicates to the blockchain using the cardano-node.exe process which is executed when the Daedalus wallet is running. Please ensure Daedalus is executing before attempting to use this tool.
 
-## Modules ##
+## Modules
 
 This tool has 4 modes: [Build, Verify, Send, Redeem].
 
-### Build ###
-
+### Build
 
 The `Build` module creates N new addresses and payment keys which can be used for purchasing CNFT tokens. Make sure to fund each address with a single UTXO covering the cost of the CNFT, plus a few extra ADA to cover transaction fees for sending and redeeming.
 
-### Verify ###
+### Verify
 
 The `Verify` module checks the current contents of each generated address for manual verification purposes, and caches the first UTXO to disk to ensure it can be sent as fast as possible.
 
-### Send ###
+### Send
 
 The `Send` module will send `X` ADA from each generated wallet to the specified receiver wallet. This module will be used to purchase the CNFT.
 
-### BulkSend ###
+### BulkSend
 
-The `BulkSend` module will send `X` * `N` ADA from a single generated wallet to the specified bulkreceiver wallet. This module can be used to purchase CNFTs by sending multple output-transactions from a single wallet.
+The `BulkSend` module will send `X` \* `N` ADA from a single generated wallet to the specified bulkreceiver wallet. This module can be used to purchase CNFTs by sending multple output-transactions from a single wallet.
 
-### Redeem ###
+### Redeem
 
 The `Redeem` module will extract all ADA and every CNFT, and send it back to the specified wallet.
 
-## Arguments ##
+## Arguments
 
 `-count`: The number of wallets and addresses to [Build, Verify, Send, Redeem] from.
 
@@ -60,9 +56,10 @@ The `Redeem` module will extract all ADA and every CNFT, and send it back to the
 
 `-safemode`: Set the `Send` or `Receive` mode to run in safety mode, prompting for approval before sending transactions. This will allow for extra time to double-check the command-line arguments to ensure ADA is sent to the correct location.
 
-## Examples ##
+## Examples
 
 --- Build 3 wallets ---
+
 ```
 .\purchase.ps1 -count 3 -build
 
@@ -151,7 +148,8 @@ Are you sure you want to proceed sending [3.025706] ADA and the assets [1 tttttt
 [10-11-2021 20:34:26:824] Transaction successfully submitted.
 ```
 
-## Donations ##
+## Donations
+
 If this script is useful for you, please consider donating ADA to the following address:
 
 ```

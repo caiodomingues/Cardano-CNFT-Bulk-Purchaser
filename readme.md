@@ -1,3 +1,12 @@
+
+Util Commands:
+
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted
+
+Install-Module -Name ThreadJob -Scope CurrentUser
+
+
+
 # Cardano NFT Bulk Purchaser #
 
 This tool is used to purchase Cardano NFT drops from multiple wallets using the cardano-cli, to allow for rapid purchases in high-demand drops.

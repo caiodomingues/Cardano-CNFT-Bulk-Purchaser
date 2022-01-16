@@ -1,8 +1,8 @@
-# Util Commands:
+# Utils:
 
-Set-ExecutionPolicy -ExecutionPolicy Unrestricted
+Command to enable this script :Set-ExecutionPolicy -ExecutionPolicy Unrestricted
 
-Install-Module -Name ThreadJob -Scope CurrentUser
+Need PowerShell Version 7.x
 
 # Cardano NFT Bulk Purchaser
 

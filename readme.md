@@ -2,7 +2,7 @@
 
 Utilize este comando para habilitar o script: `Set-ExecutionPolicy -ExecutionPolicy Unrestricted`
 
-\*\*_É necessário possuir PowerShell Versão 7.x_\*\*
+**É necessário possuir PowerShell Versão 7.x**
 
 Esta ferramenta é usada para comprar Drops NFT da rede Cardano utilizando várias carteiras por meio do `cardano-cli`, para permitir compras rápidas em drops de alta demanda.
 

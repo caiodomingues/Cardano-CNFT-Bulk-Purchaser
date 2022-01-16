@@ -1,5 +1,9 @@
 # Cardano NFT Bulk Purchaser
 
+Utilize este comando para habilitar o script: `Set-ExecutionPolicy -ExecutionPolicy Unrestricted`
+
+\*\*_É necessário possuir PowerShell Versão 7.x_\*\*
+
 Esta ferramenta é usada para comprar Drops NFT da rede Cardano utilizando várias carteiras por meio do `cardano-cli`, para permitir compras rápidas em drops de alta demanda.
 
 A ferramenta assume que o Drop CNFT utiliza ou permite várias compras enviadas para um único endereço e que o custo de cada CNFT é conhecido antes do drop.
@@ -24,13 +28,13 @@ O módulo `Send` enviará `X` ADA de cada carteira gerada para a carteira recept
 
 ### BulkSend
 
-O módulo `BulkSend` enviará `X` * `N` ADA de uma única carteira gerada para a carteira do receptor em massa especificada. Este módulo pode ser usado para comprar CNFTs enviando várias transações de saída de uma única carteira.
+O módulo `BulkSend` enviará `X` \* `N` ADA de uma única carteira gerada para a carteira do receptor em massa especificada. Este módulo pode ser usado para comprar CNFTs enviando várias transações de saída de uma única carteira.
 
 ### Redeem
 
 O módulo `Redeem` extrairá todos os ADA e todos os CNFT e os enviará de volta para a carteira especificada.
 
-## Arguments ##
+## Argumentos
 
 `-count`: O número de carteiras e endereços para Build, Verify, Send, Redeem.
 
@@ -53,7 +57,8 @@ O módulo `Redeem` extrairá todos os ADA e todos os CNFT e os enviará de volta
 ## Exemplos
 
 --- Build 3 wallets ---
-```
+
+```sh
 .\purchase.ps1 -count 3 -build
 
 Wallet Address 1: addr1aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -65,7 +70,7 @@ It is recommended to send at least 3 ADA to each wallet in order to cover transa
 
 --- Verifique se o conteúdo da carteira está preenchido e armazene em cache os UTXOs ---
 
-```
+```sh
 .\purchase.ps1 -count 3 -verify
 
 [addr1aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa] UTXO Data: Hash=3ee0391dbe1025eb78b28a45f84678e7c1b0e38d3628cd97eac5b317a4adb36c, Ix=0, Amount=3 ADA
@@ -76,7 +81,7 @@ It is recommended to send at least 3 ADA to each wallet in order to cover transa
 
 --- Envie 1 ADA para um endereço CNFT ---
 
-```
+```sh
 .\purchase.ps1 -count 3 -cost 1 -receiver addr1zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -safemode
 
 Warning!
@@ -93,7 +98,7 @@ Using Cache File
 
 --- BulkSend 3 ADA para um endereço CNFT, usando 3 transações de saída de 1 ADA cada ---
 
-```
+```sh
 .\purchase.ps1 -count 3 -bulkcost 1 -bulkreceiver addr1zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz -safemode
 
 Warning!
@@ -106,7 +111,7 @@ Using Cache File
 
 --- Verifique o conteúdo da carteira UTXOs recebidos ---
 
-```
+```sh
 .\purchase.ps1 -count 3 -verify
 
 [addr1aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa] UTXO Data: Hash=47e8be3e57052a64de982398110aa4b78538f728a06f20ec49f75ebde6401115, Ix=1, Amount=1.824731 ADA
@@ -119,7 +124,7 @@ Using Cache File
 
 --- Resgate qualquer ADA restante e os CNFTs para a carteira do proprietário original ---
 
-```
+```sh
 .\purchase.ps1 -count 3 -wallet addr1bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 
 Warning!
@@ -145,6 +150,6 @@ Are you sure you want to proceed sending [3.025706] ADA and the assets [1 tttttt
 
 Se este script for útil para você, considere doar a ADA para o seguinte endereço. Lembrando que este repositório é um fork, o endereço abaixo é do criador original, e não meu (caiodomingues):
 
-```
+```txt
 addr1q9afhw5v8rkydmvd34kl6mjvllr58lsf8kjv8wnyftf73g4utnxgcn0srryfpc4tmlq0n9lr9w5uhzqax88dneyhs48q84wugk
 ```
